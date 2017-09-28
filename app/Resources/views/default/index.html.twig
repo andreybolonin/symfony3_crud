@@ -3,6 +3,8 @@
 {% block body %}
     {% for article in articles %}
         {{ article.name }} - {{ article.description }} - {{ article.createdAt|date('Y-m-d H:i:s') }}
+        <a href="{{ path('edit', {'id': article.id}) }}">edit</a>
+        <a href="{{ path('delete', {'id': article.id}) }}">delete</a>
         <br>
     {% endfor %}
     <br>

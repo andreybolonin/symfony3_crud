@@ -38,7 +38,7 @@ class DefaultController extends Controller
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
@@ -49,5 +49,45 @@ class DefaultController extends Controller
         return $this->render('default/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * UPDATE
+     *
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function editAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository(Article::class)->find($id);
+
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->render('default/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * DELETE
+     *
+     * @Route("/delete/{id}", name="delete")
+     */
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository(Article::class)->find($id);
+        $em->remove($article);
+        $em->flush();
+
+        return $this->redirectToRoute('index');
     }
 }
