@@ -1,4 +1,14 @@
-symfony3_crud
+Installation
 =============
 
-A Symfony project created on September 28, 2017, 9:10 pm.
+1) git clone
+
+2) composer install
+
+3) bin/console doctrine:database:create
+
+4) bin/console doctrine:schema:update --force
+
+5) bin/console server:start
+
+6) http://127.0.0.1:800
